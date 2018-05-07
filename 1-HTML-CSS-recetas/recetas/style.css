@@ -1,0 +1,99 @@
+*{
+    margin:0;
+    padding:0;
+    border:0;
+}
+
+body,.seccion{
+    width: 70%;
+    margin: 0 auto;
+    background-color: rgb(255, 177, 31);
+    font-family: monospace;
+    color:rgb(82, 80, 80);
+    font-size: 14pt;
+
+}
+nav{
+    background-color: rgb(66, 66, 75);
+     padding: 1%;
+}
+nav ul, ul{
+    list-style: none;
+}
+nav ul li{
+     display: inline;
+    padding:1%;
+    border-bottom: 1px solid rgb(30, 112, 167);
+    border-right: 1px solid white;
+}
+nav ul li a {
+    text-decoration: none;
+    color:#fff;
+    font-size: 1.2rem;
+    font-family: monospace;
+    margin-left: 5px;
+    
+}
+nav ul li:hover{
+
+    color:#000;
+    background-color: rgb(253, 165, 0);;
+
+}
+
+h1,h2{
+    text-align: center;
+    padding:2%;
+    text-transform: uppercase;
+}
+
+h1{
+    color:rgb(77, 77, 82);
+    font-size:2rem;
+    
+}
+h2{
+    color:rgb(201, 245, 201);
+}
+
+p{
+    padding:1%;
+    
+}
+
+img{
+    width: 80%;
+    height: auto;
+ 
+}
+
+.seccion_2{
+    display: flex;
+}
+
+.foto{
+    width: 40%;
+}
+
+.ingredientes{
+    width: 40%;
+}
+
+.ingredientes ul li{
+    margin-top:10px;
+}
+
+/* enlace volver*/
+
+
+ div#volver{
+    margin-top:50px;
+ }
+a.volver{
+    border: 2px dotted white;
+    text-decoration: none;
+    color:white;
+    padding:1%;
+    text-align: center;
+    
+}
