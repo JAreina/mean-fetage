@@ -1,0 +1,44 @@
+body{
+  background-color: teal;
+  color: rgb(240, 239, 236);
+}
+
+
+table.minimalistBlack {
+    border: 3px solid #e25555;
+    width: 50%;
+    text-align: left;
+    border-collapse: collapse;
+    margin:0 auto;
+    text-align: center;
+  }
+  table.minimalistBlack td, table.minimalistBlack th {
+    border: 1px solid #da5e5e;
+    padding: 5px 4px;
+  }
+  table.minimalistBlack tbody td {
+    font-size: 13px;
+  }
+  table.minimalistBlack th {
+    background: rgb(133, 6, 6);
+    background: -moz-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+    background: -webkit-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+    background: linear-gradient(to bottom, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+    border-bottom: 3px solid #000000;
+  }
+  table.minimalistBlack th {
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: bold;
+    color: #041301;
+    
+  }
+  table.minimalistBlack tfoot {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000000;
+    border-top: 3px solid #000000;
+  }
+  table.minimalistBlack tfoot td {
+    font-size: 14px;
+  }
