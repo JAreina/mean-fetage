@@ -28,3 +28,16 @@ fs.readFile('./ficheros/fichero.txt',(err,data)=>{
       })
    })
 })
+
+
+fs.writeFile("f1.txt","fichero.txt",function(err){
+  console.log("escrito 1")
+  fs.writeFile("f2.txt","fichero2.txt",function(err){
+    console.log("escrito 2")
+  })
+})
+
+
+fs.writeFile("f3.txt","datos.txt",function(err){
+  console.log("escrito 3")
+})
