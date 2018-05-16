@@ -7,7 +7,7 @@ const servidor = http.createServer((req, res) => {
 	let d = [...datos ];
 
 	res.writeHead(200, { 'content-type': 'text/html' });
-	res.end(`<h1> generado servidor: ${d}</h1>`);
+	res.end(`<h1> generado servidor:   ${d} </h1>`);
 });
 
 servidor.listen(3002);
