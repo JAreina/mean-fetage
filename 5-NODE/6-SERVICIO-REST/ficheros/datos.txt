@@ -1,1 +1,0 @@
-texto leer fichero con node 

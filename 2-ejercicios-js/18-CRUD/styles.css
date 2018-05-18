@@ -1,0 +1,16 @@
+body{
+    background-color: black;
+    color: #fff;
+}
+
+form input{
+    padding: 20px;
+    width: 200px;
+    margin-top: 20px;
+    margin-left: 10px;
+    color: teal;
+    display: block;
+}
+form label{
+    margin-top: 10px;
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<script type="text/javascript">
+
+/*
+function XMLHttpRequest(){
+    this.responseText = null;
+    this.status       = null;
+    this.responseXML  = null;
+}
+XMLHttpRequest.prototype.open = function(metodo, url, asincrono){  };
+XMLHttpRequest.prototype.send = function(body){  }
+*/
+
+function peticionSincrona(){
+
+    let xmlHttp = new XMLHttpRequest();
+
+    let parametros = "nombre="+document.getElementById("nombre").value;
+
+    //xmlHttp.open(METODO,URL,SINCRONO/ASINCRONO);
+    //false: sincrono
+    //true : asincrono
+    xmlHttp.open("get","http://localhost:8080/Ej01_EjemploAjax/buscar?"+parametros,false);
+    xmlHttp.send(null); //Si la peticion es síncrona no se 'pasa a la siguiente línea' hasta que llegue la respuesta'
+
+    let respuesta = xmlHttp.responseText; //El body tal cual
+    let estado    = xmlHttp.status;       //
+    let xml       = xmlHttp.responseXML;  //Si la respuesta e sun xml aqui tenemos el arbol de elementos
+
+    procesarRespuesta(xmlHttp.responseText);
+
+}    
+
+function procesarRespuesta(datos){
+    alert(datos);
+}
+
+function procesarAsinc(datos){
+    document.getElementById('resultado').innerHTML += `<p> ${datos} </p>`;
+}
+
+function peticionAsincrona(){
+    let parametros = "nombre="+document.getElementById("nombre").value;
+    let xmlHttp = new XMLHttpRequest();
+    
+
+
+      xmlHttp.onreadystatechange = function(){
+        console.log(xmlHttp.status)
+        console.log(xmlHttp.readyState)
+              // status 0 creado
+              //         1 open
+              //          2 enviado
+              //          3 comienza a recibir respuesta
+              //           4 respuesta completa
+
+          if(this.status == 200 &&  this.readyState  == 4){
+                procesarAsinc(xmlHttp.responseText);
+               console.log(xmlHttp.status)
+          } 
+      }
+
+
+
+    xmlHttp.open("get","http://localhost:8080/Ej01_EjemploAjax/buscar?"+parametros,true);
+    xmlHttp.send();
+
+ // en lugar de onreadystatuschange 
+    xmlHttp.onload = function (){
+        console.log("CARGADO "+this.responseText);
+    }
+    xmlHttp.onerror = function(){
+        console.log("HA SIDO ERROR")
+    }
+   
+}
+
+</script>
+
+<body>
+    
+    <h2>Ajax</h2>
+
+    <br/>
+
+    Nombre:
+    <input type="text" id="nombre"/>
+    <input type="button" id="" value="Petición síncrona"  onclick="peticionSincrona()"/>
+    <input type="button" id="" value="Petición asíncrona" onclick="peticionAsincrona()"/>
+
+    <div id="resultado"></div>
+
+
+</body>
+</html>

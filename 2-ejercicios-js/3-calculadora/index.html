@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>calculadora</title>
+</head>
+<body>
+    <script>
+         var resultado =0;
+        var opcion = "";
+
+         function sumar(){
+             opcion ="+"
+         }
+         function restar(){
+             opcion = "-";
+         }
+         function dividir(){
+             opcion = "/";
+         }
+         function multiplicar(){
+             opcion = "*";
+         }
+
+
+          function setPrecision(){
+               prec = document.getElementById("precision").value;
+          }
+        function calcular(){
+            var num1 = document.getElementById("op1").value;
+            var num2 = document.getElementById("op2").value;
+
+            console.log(num1  , num2)
+
+          switch(opcion){
+              case "+":
+              document.getElementById("salida").innerHTML = parseFloat(num1)+ parseFloat(num2);       
+              break;
+              case "-":
+              document.getElementById("salida").innerHTML = parseFloat(num1)-parseFloat(num2);       
+              break;
+              case "/":
+              document.getElementById("salida").innerHTML = (parseFloat(num1)/ parseFloat(num2)).toFixed(prec);       
+              break;
+              case "*":
+              document.getElementById("salida").innerHTML = parseFloat(num1)*parseFloat(num2);       
+              break;
+          }
+               num1 = 0; num2 =0;
+           
+        }
+        
+        
+        
+        </script>
+
+    <input type="text" id="op1" value="">
+    <input type="text" id="op2">
+    <input type="button" onclick="sumar();" value="+">
+    <input type="button" onclick="restar();" value="-">
+    <input type="button" onclick="dividir();" value="/">
+    <input type="button" onclick="multiplicar();" value="*">
+    <input type="text" placeholder="precision" onchange="setPrecision();" id="precision">
+    <input type="button" onclick="calcular();" value="calcular">
+    <div  id="salida"></div>
+</body>
+</html>
