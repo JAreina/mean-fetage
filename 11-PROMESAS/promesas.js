@@ -7,7 +7,7 @@ let promesa = new Promise(
         // ejecutar una tarea en sgundo plano
         let z = 100;
         let salida=0;
-       for(var i = 0 ;z; i++,z-- ){
+       for(;z; z-- ){
            salida++;
            if(salida == 30){
             ok = false;
@@ -36,11 +36,14 @@ promesa.then(function(salida){
 
 })
 .catch(function(salida){
-    console.log(".catch "+salida)
-     console.log("rechazada")
+    rechazada(salida);
 })
 
 
+function rechazada(a){
+    console.log(".catch "+a)
+    console.log("rechazada")
+}
 
 
 /*
