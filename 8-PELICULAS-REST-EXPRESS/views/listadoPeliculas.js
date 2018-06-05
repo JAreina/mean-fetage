@@ -42,6 +42,8 @@ function inicializar(){
 
     // borrar  pelicula 
     $('#botonBorrar').click(borrar);
+    //boton vaciar formulario 
+    $('#botonVaciar').click(reset)
 }
 
 function cancelar(){
@@ -193,51 +195,7 @@ function procesarError(error){
 }
 
 
-/*
-function pintarTabla(datos,elemento){
-    let tabla = document.getElementById(elemento);
-    tabla.innerHTML="";
-    crearTh(tabla);
 
-    for(var i = 0; i<datos.length; i++){
-        document.getElementById(elemento).innerHTML += `
-    
-        <tr>
-        <td>${datos[i].id}</td>
-        <td>${datos[i].titulo}</td>
-        <td>${datos[i].director}</td>
-        <td>${datos[i].genero}</td>
-        <td>${datos[i].anio}</td>
-        
-        </tr>`;
-    }
-    
-}
-
-function crearTr(){
-    var fila = document.createElement('tr');
-    fila.setAttribute("name","fila");
-    fila.setAttribute("onclick","buscar(this)");
-    return fila;
-}
-
-
-function crearTh(tabla){
-    var tr = crearTr();
-    
-    var ths = ["id","titulo","director","genero","año"];
-    
-    
-    ths.forEach(element => {
-        var th = document.createElement('th');
-        th.style.padding ="30px";
-        th.style.border= "1px solid black";
-        var text= document.createTextNode(element);
-        th.appendChild(text);
-        tr.appendChild(th);
-    });
-    tabla.appendChild(tr);
-}*/
 
 
 /* RELLENAR TABLA CON JQUERY  listadoPeliculas.html*/
@@ -258,19 +216,21 @@ function rellenarTablaJQUERY(datos){
     }
 }
 function actualizar(){
-
+    
     window.location = "/formularioPeliculas.html";
+    reset();
 }
 
-
+function reset(){
+    localStorage.removeItem("peliculaBuscada");
+    idPeli=null;
+    $("#formulario [campo]").val('')
+}
 
 
 /* FORMULARIO PELICULAS ************************************/
 
-function obtenerValor(){
-    
-    
-}
+
 
 function procesarFormulario(){
     console.log("procesar formulario")

@@ -2,168 +2,115 @@ const express = require('express');
 const servidor = express();
 const peliculas = require('./modelo.js');
 var bodyParser = require('body-parser')
+const path = require("path");
 
    //localhost:4999/index.html
   servidor.use(express.static('views'));
 
   // peticion get sin indicar recurso
   // http://localhost:4999
+   servidor.use(bodyParser.json());
    servidor.get("/",function(req,res){
-        res.send(``)
+        res.sendFile(path.join(__dirname+'/views/listadoPeliculas.html'))
    });
    /**
     * GET / peliculas 
     */
-   servidor.get("/peliculas",function(req,res){
-
-       
-      listarPeliculas(req,res);
-   })
+   servidor.get("/peliculas",listarPeliculas);
 /**
     * GET / peliculas/ID 
     */
-   servidor.get("/peliculas/:id",function(req,res){
-      let id = req.params.id;
-       
-     buscarPelicula(req,res,id);
- })
+   servidor.get("/peliculas/:id", buscarPelicula);
  /**
     * POST  / peliculas    
     */
-   servidor.post("/peliculas",function(req,res){
-    insertarPelicula(req,res);
-})
+   servidor.post("/peliculas",insertarPelicula);
 /**
     * PUT   / peliculas/ID   
     */
-   servidor.put("/peliculas/:id",function(req,res){
-    let id = req.params.id;
-    modificarPelicula(req,res,id)
-})
+   servidor.put("/peliculas/:id",modificarPelicula);
 /**
     * DELETE   / peliculas/ID   
     */
-   servidor.delete("/peliculas/:id",function(req,res){
-    let id = req.params.id;
-    borrarPelicula(req,res)
-})
+   servidor.delete("/peliculas/:id",borrarPelicula);
 
     
 
 
-  servidor.listen(4999, function () {
-
-    console.log('http://localhost:4999');
-  });
-
+  
 
   //      LISTAR PELICULAS 
   function listarPeliculas(req,res){
-    console.log("listarpeliculas");
-    let pelis = JSON.stringify(peliculas.listarPeliculas());
-
-   // console.log(req);
-    res.writeHead(200,{ 'content-type': 'application/json' })
-   // res.writeHead("Access-Control-Allow-Origin", "*");
-    res.end(pelis);
+  
+    let pelis = peliculas.listarPeliculas();
+    res.json(pelis)
+   
 }
 
 // BUSCAR PELICULA 
-function buscarPelicula(req,res,id){
-    console.log(id)
-  console.log("buscar pelicula ");
- let peliBuscada = peliculas.buscarPelicula(id);
-  // console.log(req);
+function buscarPelicula(req,res){
+    
+  let id = req.params.id;
+  let peliBuscada = peliculas.buscarPelicula(id);
+ 
   if(peliBuscada !=null){
-      res.writeHead(200,{ 'content-type': 'application/json' })
-      // res.writeHead("Access-Control-Allow-Origin", "*");
-       res.end(JSON.stringify(peliBuscada));
+     res.json(peliBuscada)
+      
   }else{
-      res.writeHead(404,{ 'content-type': 'application/json' })
-      // res.writeHead("Access-Control-Allow-Origin", "*");
-       res.end("pelicula no encontrada");
+      res.status(404);
+       res.send("pelicula no encontrada");
   }
  
 }
 // INSERTAR PELICULA 
 function insertarPelicula(req,res){
-    console.log("INSERTAR PELIUCLA SERVIDOR ");
-    
-    //let peli = JSON.parse(req.body);
   
-     //OBTENER EN EL SERVIDOR LA SESSION STORAGE
-     let session = req.headers.cookie;
-       console.log(session)
-   // evento cuando vienen datos en el body de la petición 'data'
-   req.on('data',function(body){
-       console.log(body.toString());
-       let pelicula = JSON.parse(body.toString());
-       let mensaje = peliculas.insertarPelicula(pelicula);
+    let peli = req.body;
+    let mensaje = peliculas.insertarPelicula(peli);
 
      if(mensaje == 'OK'){
-        res.writeHead(201,{"contentType": "text/plain"})
-
-        res.end(mensaje);
+        res.status(201)
+        res.send("PELICULA INSERTADA OK")
      }else{
-        res.writeHead(400,{"contentType": "text/plain"})
-
-        res.end("mal");
-     }
-    
-   });
-
-
-    // console.log(req);
-    
-
-    
+        res.status(400)
+        res.send("FALLO AL INSERTAR ");
+     } 
 }
 
 // MODIFICAR PELICULA
-function modificarPelicula(req,res,id){
-    console.log("MODIFICAR  PELIUCLA SERVIDOR ");
-    
-    //let peli = JSON.parse(req.body);
+function modificarPelicula(req,res){
   
-     //OBTENER EN EL SERVIDOR LA SESSION STORAGE
-     //let session = req.headers.cookie;
-       //console.log(session)
-   // evento cuando vienen datos en el body de la petición 'data'
-   req.on('data',function(body){
-       console.log(body.toString());
-       let pelicula = JSON.parse(body.toString());
-       //  console.log(`MODIFICAR PELICUAL : ${pelicula}`)
-       let mensaje = peliculas.modificarPelicula(pelicula);// en modelo vemos si existe esa peli
+    let id = req.params.id;
+    let peli = req.body;
+
+    let mensaje = peliculas.modificarPelicula(peli);// en modelo vemos si existe esa peli
 
      if(mensaje == 'OK'){
-        res.writeHead(201,{"contentType": "text/plain"})
-
-        res.end("bien");
+        res.status(201);
+        res.send("PELICULA MODIFICADA");
      }else{
-        res.writeHead(400,{"contentType": "text/plain"})
-
-        res.end("mal");
+        res.status(400)
+        res.send("NO MODIFICADO");
      }
     
-   });
+
 }
 
 // BORRAR PELICULA 
 function borrarPelicula(req,res){
-    let recurso = req.url;
-
-    let url = recurso.split('/');
-    let id = url[url.length-1];
-    console.log("ir a borrar  " +id)
+    let id = req.params.id;
     let mensaje = peliculas.borrarPelicula(id);
 
     if(mensaje == 'OK'){
-        res.writeHead(201,{"contentType": "text/plain"})
-
-        res.end("bien");
+        res.status(201)
+        res.send("bien");
      }else{
-        res.writeHead(400,{"contentType": "text/plain"})
-
-        res.end("mal");
+        res.status(400)
+        res.send("NO BORRADO");
      }
 }
+
+servidor.listen(3999, function () {
+
+    console.log('http://localhost:3999');
+  });
